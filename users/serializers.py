@@ -1,12 +1,7 @@
 from recipes.serializers import RecipeSerializer
-from .models import User
 from rest_framework import serializers
 
-
-# class UserSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['url', 'username', 'email', 'recipes']
+from .models import User
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,4 +9,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'url', 'recipes',)
+        fields = ('username', 'first_name', 'last_name', 'email', 'url', 'recipes',)
+
+    def create(self, validated_data):
+        user = User.objects.create(**validated_data)
+        return user
